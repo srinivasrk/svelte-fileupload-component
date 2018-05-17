@@ -8,13 +8,13 @@ module.exports = {
 	entry: config.client.entry(),
 	output: config.client.output(),
 	resolve: {
-		extensions: ['.js', '.json', '.html'],
-		mainFields: ['svelte', 'module', 'browser', 'main']
+		extensions: ['.js', '.json', '.html']
 	},
 	module: {
 		rules: [
 			{
 				test: /\.html$/,
+				exclude: /node_modules/,
 				use: {
 					loader: 'svelte-loader',
 					options: {
@@ -22,7 +22,28 @@ module.exports = {
 						hotReload: true
 					}
 				}
-			}
+			},
+			{
+				test: /\.css$/,
+				use: [
+					{ loader: 'style-loader' },
+					{ loader: 'css-loader' }
+				]
+			},
+			{
+        test: /\.scss$/,
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader'
+          },
+          {
+            loader: 'sass-loader'
+          }
+        ]
+      }
 		]
 	},
 	mode,

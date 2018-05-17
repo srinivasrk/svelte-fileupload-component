@@ -8,3 +8,5 @@ yarn-error.log
 /export/
 /build/
 /app/manifest/
+*.csv
+*.sqlite

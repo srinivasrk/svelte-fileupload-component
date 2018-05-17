@@ -1,0 +1,54 @@
+<form action="/api/imports" class="dropzone" id="site-upload">
+    <div class="fallback">
+      <input name="sites_data" type="file" />
+    </div>
+</form>
+
+
+<script>
+// const csvparse = require('csv-parse');
+export default {
+
+  oncreate() {
+    var DropZone = require('dropzone');
+    require('dropzone/dist/dropzone.css');
+    const {id} = this.get();
+    const {fileHandler, typeOfFiles, maxFiles} = this.get().dropzoneopts;
+    console.log(this.get().dropzoneopts);
+    DropZone.autoDiscover = false;
+    // console.log("file type" + typeOfFiles);
+    let dzOpts = {
+      url: "/api/imports",
+      timeout: 180000,
+      acceptedFiles: ".csv",
+      maxFiles: 1
+    };
+
+
+
+    this.dropZone = new DropZone(`form#site-upload`, dzOpts);
+    let dz = this.dropZone;
+
+    this.dropZone.handleFiles = function(files) {
+      console.log('dz handle adding files: ', files)
+      var _this5 = this;
+      var files_array = [];
+      for (var i = 0; i < files.length; i++) {
+        files_array.push(files[i]);
+      }
+      return files_array.map(function(file) {
+        return _this5.addFile(file);
+      });
+  };
+    this.dropZone.on('success', (file, res) => {
+      this.fire('success',{id:this.get().id})
+      // console.log(file);
+    });
+
+		this.dropZone.on('error', function(file, errorMessage) {
+			console.log(`Error uploading file: ${errorMessage}`);
+		});
+
+  }
+}
+</script>
