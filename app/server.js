@@ -7,9 +7,11 @@ const express = require('express');
 const fileUpload = require('express-fileupload');
 const morgan = require('morgan');;
 const bodyParser = require('body-parser');
+var multer = require('multer');
 
 express() // You can also use Express
 	.use(fileUpload())
+	.use(bodyParser.urlencoded())
 	.use(
 		compression({ threshold: 0 }),
 		serve('assets'),
@@ -19,5 +21,5 @@ express() // You can also use Express
 		})
 	)
 	.use(morgan('combined'))
-	.use(bodyParser.json())
+
 	.listen(process.env.PORT);

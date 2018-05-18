@@ -39,8 +39,8 @@ export default {
       });
     };
     dz.on('success', (file, res) => {
-      this.fire('success',{id:this.get().id}) //handle additional events based on the success
-      // console.log(file);
+      this.fire('success',{id:this.get().id, response: res}) //handle additional events based on the success
+      // console.log(res);
     });
 
     this.dropZone.on('error', function(file, errorMessage) {
